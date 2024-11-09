@@ -8,8 +8,6 @@ import time
 from PIL import Image,ImageDraw,ImageFont
 import traceback
 
-logging.basicConfig(level=logging.DEBUG)
-
 try:
 
     epd = epd2in7.EPD()
