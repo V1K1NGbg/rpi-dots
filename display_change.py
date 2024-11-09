@@ -29,7 +29,6 @@ try:
     print(ip)
 
     draw.text((0, 0), ip , font = font24, fill = 0)
-    draw.text((10, 20), 'hello world', font = font18, fill = 0)
 
     epd.display(epd.getbuffer(Himage))
 
