@@ -18,10 +18,13 @@ try:
 
     font24 = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 24)
     font18 = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 18)
-    
+
     Himage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
     draw = ImageDraw.Draw(Himage)
     draw.text((10, 0), 'hello world', font = font24, fill = 0)
+
+    epd.display(epd.getbuffer(Himage))
+    time.sleep(2)
 
     # logging.info("epd2in7 Demo")   
     # epd = epd2in7.EPD()
