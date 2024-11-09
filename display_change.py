@@ -21,7 +21,8 @@ try:
 
     Himage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
     draw = ImageDraw.Draw(Himage)
-    draw.text((10, 0), 'hello world', font = font24, fill = 0)
+    draw.text((0, 0), subprocess.check_output(['hostname', '-I']) , font = font24, fill = 0)
+    draw.text((10, 20), 'hello world', font = font18, fill = 0)
 
     epd.display(epd.getbuffer(Himage))
     time.sleep(2)
