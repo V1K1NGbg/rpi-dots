@@ -3,6 +3,7 @@
 import sys
 import os
 import subprocess
+import logging
 import shlex
 import epd2in7
 import time
