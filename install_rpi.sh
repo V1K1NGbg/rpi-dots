@@ -1,14 +1,18 @@
 #!/bin/bash
 
+# Update
 sudo apt update -y && sudo apt upgrade -y
 
+# Docker
 curl -sSL https://get.docker.com | sh
 
 sudo usermod -aG docker $USER
 
+# Enable screen
 sudo raspi-config
 # Choose Interfacing Options -> SPI -> Yes Enable SPI interface
 
+# Install screen dependencies
 sudo apt-get update
 sudo apt-get install python3-pip
 sudo apt-get install python3-pil
