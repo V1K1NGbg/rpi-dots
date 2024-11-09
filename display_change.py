@@ -21,7 +21,7 @@ try:
     Himage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
     draw = ImageDraw.Draw(Himage)
 
-    ip = subprocess.check_output(shlex.split("hostname -I"))
+    ip = subprocess.run("hostname -I | awk '{print $1;}'", capture_output=True).stdout
 
     print(ip)
 
