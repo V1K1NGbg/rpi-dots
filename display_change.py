@@ -12,26 +12,30 @@ import traceback
 
 try:
 
+    # Init
     epd = epd2in7.EPD()
     epd.init()
     epd.Clear(0xFF)
 
+    # Font
     font24 = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 24)
     font18 = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 18)
 
+    # Data
+    ip = subprocess.check_output("hostname -I | awk '{print $1;}'", shell=True).decode('utf-8')
+
+    # Create Image
     Himage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
     draw = ImageDraw.Draw(Himage)
 
-    # ip = subprocess.run("hostname -I | awk '{print $1;}'", capture_output=True).stdout
-
-    ip = subprocess.check_output("hostname -I | awk '{print $1;}'", shell=True).decode('utf-8')
-
-    print(ip)
-
+    # Draw
     draw.text((0, 0), ip , font = font24, fill = 0)
 
+    # Display
     epd.display(epd.getbuffer(Himage))
 
+    # Example
+    
     # logging.info("epd2in7 Demo")   
     # epd = epd2in7.EPD()
     
