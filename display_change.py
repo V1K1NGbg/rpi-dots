@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 import sys
 import os
-import logging
+import subprocess
 import epd2in7
 import time
 from PIL import Image,ImageDraw,ImageFont
@@ -25,7 +25,6 @@ try:
     draw.text((10, 20), 'hello world', font = font18, fill = 0)
 
     epd.display(epd.getbuffer(Himage))
-    time.sleep(2)
 
     # logging.info("epd2in7 Demo")   
     # epd = epd2in7.EPD()
