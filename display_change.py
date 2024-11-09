@@ -24,7 +24,7 @@ try:
 
     # ip = subprocess.run("hostname -I | awk '{print $1;}'", capture_output=True).stdout
 
-    ip = subprocess.check_output(shlex.split("hostname -I | awk '{print $1;}'")).decode('utf-8')
+    ip = subprocess.check_output("hostname -I | awk '{print $1;}'", shell=True).decode('utf-8')
 
     print(ip)
 
