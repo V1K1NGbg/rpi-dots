@@ -22,9 +22,11 @@ try:
     Himage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
     draw = ImageDraw.Draw(Himage)
 
-    ip = subprocess.run("hostname -I | awk '{print $1;}'", capture_output=True).stdout
+    # ip = subprocess.run("hostname -I | awk '{print $1;}'", capture_output=True).stdout
 
-    logging.info(ip)
+    ip = subprocess.check_output(shlex.split("hostname -I | awk '{print $1;}'")).decode('utf-8')
+
+    print(ip)
 
     draw.text((0, 0), ip , font = font24, fill = 0)
     draw.text((10, 20), 'hello world', font = font18, fill = 0)
