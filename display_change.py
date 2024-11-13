@@ -30,9 +30,12 @@ try:
 
     # Draw
     draw.text((0, 0), ip , font = font24, fill = 0)
+    draw.line((20, 50, 70, 100), fill = 0)
+    draw.line((70, 50, 20, 100), fill = 0)
+    draw.rectangle((20, 50, 70, 100), outline = 0)
 
     # Display
-    epd.display_4Gray(epd.getbuffer(Himage))
+    epd.display(epd.getbuffer(Himage))
 
     # Example
     
