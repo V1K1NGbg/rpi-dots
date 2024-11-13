@@ -32,7 +32,7 @@ try:
     draw.text((0, 0), ip , font = font24, fill = 0)
 
     # Display
-    epd.display(epd.getbuffer(Himage))
+    epd.display_4Gray(epd.getbuffer(Himage))
 
     # Example
     
