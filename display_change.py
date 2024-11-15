@@ -22,17 +22,20 @@ try:
     font18 = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 18)
 
     # Data
-    ip = subprocess.check_output("hostname -I | awk '{print $1;}'", shell=True).decode('utf-8')
+    # ip = subprocess.check_output("hostname -I | awk '{print $1;}'", shell=True).decode('utf-8')
 
     # Create Image
     Himage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
     draw = ImageDraw.Draw(Himage)
 
     # Draw
-    draw.text((0, 0), ip , font = font24, fill = 0)
-    draw.line((20, 50, 70, 100), fill = 0)
-    draw.line((70, 50, 20, 100), fill = 0)
-    draw.rectangle((20, 50, 70, 100), outline = 0)
+    # draw.text((0, 0), ip , font = font24, fill = 0)
+    # draw.line((20, 50, 70, 100), fill = 0)
+    # draw.line((70, 50, 20, 100), fill = 0)
+    # draw.rectangle((20, 50, 70, 100), outline = 0)
+
+    bmp = Image.open('layout.png')
+    Himage.paste(bmp, (50,10))
 
     # Display
     epd.display(epd.getbuffer(Himage))
