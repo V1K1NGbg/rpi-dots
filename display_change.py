@@ -44,7 +44,7 @@ try:
 
     pressed = False
     GPIO.setmode(GPIO.BCM)
-    GPIO.setup(5, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(5, GPIO.IN, pull_up_down=GPIO.PUD_UP) #5, 6, 13, 19
     # GPIO.add_event_detect(17, GPIO.FALLING, callback=lambda pin: self.button_pressed(1, button_handler), bouncetime=200)
 
     while pressed == False:
