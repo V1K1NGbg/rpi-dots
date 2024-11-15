@@ -8,6 +8,7 @@ import shlex
 import epd2in7
 import time
 from PIL import Image,ImageDraw,ImageFont
+import RPi.GPIO as GPIO
 import traceback
 
 try:
@@ -20,13 +21,15 @@ try:
     # Font
     font24 = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 24)
     font18 = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 18)
+    font12 = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 12)
+    font06 = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 6)
 
     # Data
-    # ip = subprocess.check_output("hostname -I | awk '{print $1;}'", shell=True).decode('utf-8')
+    ip = subprocess.check_output("hostname -I | awk '{print $1;}'", shell=True).decode('utf-8')
 
     # Create Image
     Himage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
-    draw = ImageDraw.Draw(Himage)
+    # draw = ImageDraw.Draw(Himage)
 
     # Draw
     # draw.text((0, 0), ip , font = font24, fill = 0)
@@ -37,6 +40,16 @@ try:
     Himage.paste(Image.open('layout.png'))
 
     # Display
+    epd.display(epd.getbuffer(Himage))
+
+    while pressed == False:
+        if GPIO.input(17) == False:
+            pressed = True
+            print("Button Pressed")
+            break
+    draw = ImageDraw.Draw(Himage)
+    draw.text((6, 6), 'hello world', font = font06, fill = 0)
+
     epd.display(epd.getbuffer(Himage))
 
     # Example
