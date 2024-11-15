@@ -43,11 +43,12 @@ try:
     epd.display(epd.getbuffer(Himage))
 
     pressed = False
-    GPIO.setmode(GPIO.BOARD)
-    GPIO.setup(5, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup("17", GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    # GPIO.add_event_detect("17", GPIO.FALLING, callback=lambda pin: self.button_pressed(1, button_handler), bouncetime=200)
 
     while pressed == False:
-        if GPIO.input(5) == False:
+        if GPIO.input(17) == False:
             pressed = True
             print("Button Pressed")
             break
