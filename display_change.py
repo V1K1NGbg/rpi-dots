@@ -43,9 +43,11 @@ try:
     epd.display(epd.getbuffer(Himage))
 
     pressed = False
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(5, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
     while pressed == False:
-        if GPIO.input(17) == False:
+        if GPIO.input(5) == False:
             pressed = True
             print("Button Pressed")
             break
