@@ -42,6 +42,8 @@ try:
     # Display
     epd.display(epd.getbuffer(Himage))
 
+    pressed = False
+
     while pressed == False:
         if GPIO.input(17) == False:
             pressed = True
