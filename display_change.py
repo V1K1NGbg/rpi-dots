@@ -34,8 +34,7 @@ try:
     # draw.line((70, 50, 20, 100), fill = 0)
     # draw.rectangle((20, 50, 70, 100), outline = 0)
 
-    bmp = Image.open('layout.png')
-    Himage.paste(bmp, (50,10))
+    Himage.paste(Image.open('layout.png'))
 
     # Display
     epd.display(epd.getbuffer(Himage))
