@@ -21,6 +21,8 @@ def draw(num, text):
     for t in range(3):
         if text[t] == '':
             continue
+        if draw.textsize(text[t], font=font12)[0] > 32:
+            text[t] = text[t][:5] + '...'
         draw.text(text_locations[t], text[t], font = font12, fill = 0)
     # draw_func(Himage)
     epd.display(epd.getbuffer(Himage))
