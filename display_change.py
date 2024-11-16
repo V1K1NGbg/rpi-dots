@@ -11,15 +11,19 @@ from PIL import Image,ImageDraw,ImageFont
 import RPi.GPIO as GPIO
 import traceback
 
+# 176 - 4(offset) / n + 8 = 8, 51, 94, 137
+text_locations = [(8, 8), (8, 51), (8, 94), (8, 137)]
+
 def draw(num, text):
-    Himage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
+    Himage = Image.new('1', (epd.height, epd.width), 255)
     Himage.paste(Image.open('layout' + str(num) + '.png'))
     draw = ImageDraw.Draw(Himage)
-    for t in range(len(text)):
-        draw.text((6, 6 + t * 6), text[t], font = font12, fill = 0)
+    for t in range(3):
+        if text[t] == '':
+            continue
+        draw.text(text_locations[t], text[t], font = font12, fill = 0)
     # draw_func(Himage)
     epd.display(epd.getbuffer(Himage))
-
 try:
 
     # Init
@@ -62,7 +66,7 @@ try:
             print("Button Pressed")
             break
 
-    draw(2, ['Hello', 'World'])
+    draw(2, ['Hello', '', 'World'])
 
     # Example
     
