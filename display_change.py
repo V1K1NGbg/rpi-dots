@@ -22,7 +22,7 @@ def draw(num, text):
             while text[t] != "":
                 line = ""
                 location = text_locations[t]
-                while draw.textlength(line + text[t][0], font=font12) <= 32.0:
+                while text[t] and draw.textlength(line + text[t][0], font=font12) <= 32.0:
                     line += text[t][0]
                     text[t] = text[t][1:]
                 draw.text(text_locations[t], line, font=font12, fill=0)
