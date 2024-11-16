@@ -77,7 +77,7 @@ try:
     #         print("Button Pressed")
     #         break
 
-    draw(2, ['Hello000', '', 'World'])
+    draw(4, ['Hello000', '', 'World',  '...'])
 
     # Example
     
