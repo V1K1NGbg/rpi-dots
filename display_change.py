@@ -18,8 +18,17 @@ def draw(num, text):
     for t in range(3):
         if text[t] == '':
             continue
-        print(draw.textlength(text[t], font=font12))
-            
+        if draw.textlength(text[t], font=font12) > 32.0:
+            while text[t] != "":
+                line = ""
+                location = text_locations[t]
+                while draw.textlength(line + text[t][0], font=font12) <= 32.0:
+                    line += text[t][0]
+                    text[t] = text[t][1:]
+                draw.text(text_locations[t], line, font=font12, fill=0)
+                location = (location[0], location[1] + 14)
+        else:
+            draw.text(text_locations[t], text[t], font=font12, fill=0)
     # draw_func(Himage)
     epd.display(epd.getbuffer(Himage))
 try:
