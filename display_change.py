@@ -11,6 +11,15 @@ from PIL import Image,ImageDraw,ImageFont
 import RPi.GPIO as GPIO
 import traceback
 
+def draw(num, text):
+    Himage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
+    Himage.paste(Image.open('layout' + str(num) + '.png'))
+    draw = ImageDraw.Draw(Himage)
+    for t in range(len(text)):
+        draw.text((6, 6 + t * 6), text[t], font = font12, fill = 0)
+    # draw_func(Himage)
+    epd.display(epd.getbuffer(Himage))
+
 try:
 
     # Init
@@ -25,10 +34,10 @@ try:
     font06 = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 6)
 
     # Data
-    ip = subprocess.check_output("hostname -I | awk '{print $1;}'", shell=True).decode('utf-8')
+    # ip = subprocess.check_output("hostname -I | awk '{print $1;}'", shell=True).decode('utf-8')
 
     # Create Image
-    Himage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
+    # Himage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
     # draw = ImageDraw.Draw(Himage)
 
     # Draw
@@ -37,10 +46,10 @@ try:
     # draw.line((70, 50, 20, 100), fill = 0)
     # draw.rectangle((20, 50, 70, 100), outline = 0)
 
-    Himage.paste(Image.open('layout.png'))
+    # Himage.paste(Image.open('layout0.png'))
 
     # Display
-    epd.display(epd.getbuffer(Himage))
+    # epd.display(epd.getbuffer(Himage))
 
     pressed = False
     GPIO.setmode(GPIO.BCM)
@@ -52,10 +61,8 @@ try:
             pressed = True
             print("Button Pressed")
             break
-    draw = ImageDraw.Draw(Himage)
-    draw.text((6, 6), 'hello world', font = font06, fill = 0)
 
-    epd.display(epd.getbuffer(Himage))
+    draw(2, ['Hello', 'World'])
 
     # Example
     
