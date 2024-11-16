@@ -82,7 +82,7 @@ try:
     draw(4, ['Hello000', '', 'World',  '...'], font10, lambda draw: (
         # draw.text((53, 8), 'Main box', font=font24, fill=0)
         draw.line((53, 8, 255, 167), fill = 0)
-        draw.line((255, 8, 53, 167), fill = 0)
+        # draw.line((255, 8, 53, 167), fill = 0)
     ))
 
     # Example
