@@ -18,7 +18,7 @@ def draw(num, text):
     for t in range(3):
         if text[t] == '':
             continue
-        if draw.textlength > 32:
+        if draw.textlength(text[t], font=font12) > 32:
             lines = [text[t][i:i+32] for i in range(0, len(text[t]), 32)]
             for i, line in enumerate(lines):
                 draw.text((text_locations[t][0], text_locations[t][1] + i * 12), line, font=font12, fill=0)
@@ -64,11 +64,11 @@ try:
     GPIO.setup(5, GPIO.IN, pull_up_down=GPIO.PUD_UP) #5, 6, 13, 19
     # GPIO.add_event_detect(17, GPIO.FALLING, callback=lambda pin: self.button_pressed(1, button_handler), bouncetime=200)
 
-    while pressed == False:
-        if GPIO.input(5) == False:
-            pressed = True
-            print("Button Pressed")
-            break
+    # while pressed == False:
+    #     if GPIO.input(5) == False:
+    #         pressed = True
+    #         print("Button Pressed")
+    #         break
 
     draw(2, ['Hello', '', 'World'])
 
