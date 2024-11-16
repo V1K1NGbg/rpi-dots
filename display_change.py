@@ -15,7 +15,7 @@ def draw(num, text):
     Himage = Image.new('1', (epd.height, epd.width), 255)
     Himage.paste(Image.open('layout' + str(num) + '.png'))
     draw = ImageDraw.Draw(Himage)
-    for t in range(3):
+    for t in range(4):
         if text[t] == '':
             continue
         if draw.textlength(text[t], font=font12) > 32.0:
