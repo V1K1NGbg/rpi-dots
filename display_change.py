@@ -11,24 +11,24 @@ from PIL import Image,ImageDraw,ImageFont
 import RPi.GPIO as GPIO
 import traceback
 
-def draw(num, text):
+def draw(num, text, fontxx):
     Himage = Image.new('1', (epd.height, epd.width), 255)
     Himage.paste(Image.open('layout' + str(num) + '.png'))
     draw = ImageDraw.Draw(Himage)
     for t in range(4):
         if text[t] == '':
             continue
-        if draw.textlength(text[t], font=font12) > 32.0:
+        if draw.textlength(text[t], font=fontxx) > 32.0:
             location = text_locations[t]
             while text[t] != "":
                 line = ""
-                while text[t] and draw.textlength(line + text[t][0], font=font12) <= 32.0:
+                while text[t] and draw.textlength(line + text[t][0], font=fontxx) <= 32.0:
                     line += text[t][0]
                     text[t] = text[t][1:]
-                draw.text(location, line, font=font12, fill=0)
+                draw.text(location, line, font=fontxx, fill=0)
                 location = (location[0], location[1] + 14)
         else:
-            draw.text(text_locations[t], text[t], font=font12, fill=0)
+            draw.text(text_locations[t], text[t], font=fontxx, fill=0)
     # draw_func(Himage)
     epd.display(epd.getbuffer(Himage))
 try:
@@ -42,6 +42,7 @@ try:
     font24 = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 24)
     font18 = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 18)
     font12 = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 12)
+    font10 = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 10)
     font06 = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 6)
 
 
@@ -77,7 +78,7 @@ try:
     #         print("Button Pressed")
     #         break
 
-    draw(4, ['Hello000', '', 'World',  '...'])
+    draw(4, ['Hello000', '', 'World',  '...'], font10)
 
     # Example
     
