@@ -11,7 +11,7 @@ from PIL import Image,ImageDraw,ImageFont
 import RPi.GPIO as GPIO
 import traceback
 
-def draw(num, text, fontxx):
+def draw(num, text, fontxx, draw_func):
     Himage = Image.new('1', (epd.height, epd.width), 255)
     Himage.paste(Image.open('layout' + str(num) + '.png'))
     draw = ImageDraw.Draw(Himage)
@@ -29,7 +29,7 @@ def draw(num, text, fontxx):
                 location = (location[0], location[1] + 14)
         else:
             draw.text(text_locations[t], text[t], font=fontxx, fill=0)
-    # draw_func(Himage)
+    draw_func(draw)
     epd.display(epd.getbuffer(Himage))
 try:
 
@@ -78,7 +78,10 @@ try:
     #         print("Button Pressed")
     #         break
 
-    draw(4, ['Hello000', '', 'World',  '...'], font10)
+    # if n == 0, loc = (8, 8) else loc = (53, 8)
+    draw(4, ['Hello000', '', 'World',  '...'], font10, lambda draw: (
+        draw.text((53, 8), 'Main box', font=font24, fill=0)
+    ))
 
     # Example
     
