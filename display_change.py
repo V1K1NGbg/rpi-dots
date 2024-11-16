@@ -11,9 +11,6 @@ from PIL import Image,ImageDraw,ImageFont
 import RPi.GPIO as GPIO
 import traceback
 
-# 176 - 4(offset) / n + 8 = 8, 51, 94, 137
-text_locations = [(8, 8), (8, 51), (8, 94), (8, 137)]
-
 def draw(num, text):
     Himage = Image.new('1', (epd.height, epd.width), 255)
     Himage.paste(Image.open('layout' + str(num) + '.png'))
@@ -21,9 +18,10 @@ def draw(num, text):
     for t in range(3):
         if text[t] == '':
             continue
-        if draw.textsize(text[t], font=font12)[0] > 32:
-            text[t] = text[t][:5] + '...'
-        draw.text(text_locations[t], text[t], font = font12, fill = 0)
+        if draw.textlength > 32:
+            lines = [text[t][i:i+32] for i in range(0, len(text[t]), 32)]
+            for i, line in enumerate(lines):
+                draw.text((text_locations[t][0], text_locations[t][1] + i * 12), line, font=font12, fill=0)
     # draw_func(Himage)
     epd.display(epd.getbuffer(Himage))
 try:
@@ -38,6 +36,10 @@ try:
     font18 = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 18)
     font12 = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 12)
     font06 = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 6)
+
+
+    # 176 - 4(offset) / n + 8 = 8, 51, 94, 137
+    text_locations = [(8, 8), (8, 51), (8, 94), (8, 137)]
 
     # Data
     # ip = subprocess.check_output("hostname -I | awk '{print $1;}'", shell=True).decode('utf-8')
