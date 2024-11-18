@@ -90,7 +90,7 @@ try:
         title = 'Display'
         draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
 
-    def draw_time_screen(draw):
+    # def draw_time_screen(draw):
         
     
 
