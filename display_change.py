@@ -70,7 +70,9 @@ try:
     # Display
     # epd.display(epd.getbuffer(Himage))
 
+
     # --------------------------------------------
+
 
     # if n == 0, loc = (8, 8) else loc = (53, 8) ; (255, 167)
     def draw_booting_screen(draw):
@@ -79,29 +81,65 @@ try:
         draw.text(((264-draw.textlength(title, font=font24))/2, 70), title, font=font24, fill=0)
         draw.text(((264-draw.textlength(subtitle, font=font18))/2, 100), subtitle, font=font18, fill=0)
 
+    def draw_start_screen(draw):
+        title = 'Welcome!'
+        draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
+
+    def draw_stat_screen(draw):
+        title = 'Stats'
+        draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
+
+    def draw_docker_screen(draw):
+        title = 'Docker'
+        draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
+
+    def draw_power_screen(draw):
+        title = 'Power'
+        draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
+
+
     draw(0, ['', '', '', ''], font10, draw_booting_screen)
 
     time.sleep(3)
 
-    # if n == 0, loc = (8, 8) else loc = (53, 8) ; (255, 167)
-    def draw_welcome_screen(draw):
-        title = 'Welcome!'
-        draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
-
-    draw(4, ['', '', '', ''], font10, draw_welcome_screen)
-
     GPIO.setmode(GPIO.BCM)
-    GPIO.setup(5, GPIO.IN, pull_up_down=GPIO.PUD_UP) #5, 6, 13, 19
+    GPIO.setup(5, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(6, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(13, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(19, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+    draw(4, ['Stats', 'Docker', '', 'Power'], font10, draw_start_screen)
+
+    while True:
+        if GPIO.input(5) == False:
+            draw(4, ['Stats', 'Docker', '', 'Power'], font10, draw_stat_screen)
+            while True:
+                if GPIO.input(5) == False:
+                    draw(4, ['Stats', 'Docker', '', 'Power'], font10, draw_start_screen)
+        if GPIO.input(6) == False:
+            draw(4, ['Stats', 'Docker', '', 'Power'], font10, draw_docker_screen)
+            while True:
+                if GPIO.input(5) == False:
+                    draw(4, ['Stats', 'Docker', '', 'Power'], font10, draw_start_screen)
+        # if GPIO.input(13) == False:
+        #     draw(4, ['Stats', 'Docker', '', 'Power'], font10, draw_start_screen)
+        if GPIO.input(19) == False:
+            draw(4, ['Stats', 'Docker', '', 'Power'], font10, draw_power_screen)
+            while True:
+                if GPIO.input(5) == False:
+                    draw(4, ['Stats', 'Docker', '', 'Power'], font10, draw_start_screen)
+
+
+    # --------------------------------------------
+
+
     # GPIO.add_event_detect(17, GPIO.FALLING, callback=lambda pin: self.button_pressed(1, button_handler), bouncetime=200)
 
     # while pressed == False:
     #     if GPIO.input(5) == False:
     #         pressed = True
     #         print("Button Pressed")
-    #         break
-
-    
-    # --------------------------------------------
+    #         break    
 
     # if n == 0, loc = (8, 8) else loc = (53, 8) ; (255, 167)
     # draw(4, ['Hello000', '', 'World',  '...'], font10, lambda draw: (
