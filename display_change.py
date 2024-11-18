@@ -77,7 +77,7 @@ try:
         title = 'Hello There!'
         subtitle = 'Booting...'
         draw.text(((264-draw.textlength(title, font=font24))/2, 70), title, font=font24, fill=0)
-        draw.text(((264-draw.textlength(subtitle, font=font18))/2, 90), subtitle, font=font18, fill=0)
+        draw.text(((264-draw.textlength(subtitle, font=font18))/2, 100), subtitle, font=font18, fill=0)
 
     draw(0, ['', '', '', ''], font10, draw_booting_screen)
 
