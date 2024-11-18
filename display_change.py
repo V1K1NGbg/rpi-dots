@@ -81,6 +81,37 @@ try:
         draw.text(((264-draw.textlength(title, font=font24))/2, 70), title, font=font24, fill=0)
         draw.text(((264-draw.textlength(subtitle, font=font18))/2, 100), subtitle, font=font18, fill=0)
 
+    def draw_start_screen(draw):
+        title = 'Welcome!'
+        draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
+
+
+    def draw_display_screen(draw):
+        title = 'Display'
+        draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
+
+    def draw_time_screen(draw):
+        
+    
+
+    def draw_vitals_screen(draw):
+        title = 'Vitals'
+        draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
+
+    
+
+
+    def draw_docker_screen(draw):
+        title = 'Docker'
+        draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
+
+
+
+
+    def draw_power_screen(draw):
+        title = 'Power'
+        draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
+
     def draw_stop_screen(draw):
         title = 'Shutting Down...'
         subtitle = 'press any button to cancel'
@@ -99,26 +130,11 @@ try:
         draw.text(((264-draw.textlength(title, font=font24))/2, 70), title, font=font24, fill=0)
         draw.text(((264-draw.textlength(subtitle, font=font12))/2, 100), subtitle, font=font12, fill=0)
 
-
-    def draw_start_screen(draw):
-        title = 'Welcome!'
-        draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
-
-    def draw_display_screen(draw):
-        title = 'Display'
-        draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
-
-    def draw_vitals_screen(draw):
-        title = 'Vitals'
-        draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
-
-    def draw_docker_screen(draw):
-        title = 'Docker'
-        draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
-
-    def draw_power_screen(draw):
-        title = 'Power'
-        draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
+    
+    def draw_end_screen():
+        Himage = Image.new('1', (epd.height, epd.width), 255)
+        Himage.paste(Image.open('rpi.png'))
+        epd.display(epd.getbuffer(Himage))
 
 
     def back(draw):
@@ -178,6 +194,7 @@ try:
                         back(draw)
                         break
                     else:
+                        draw_end_screen()
                         os.system("sudo shutdown now")
                 if GPIO.input(13) == False:
                     draw(0, ['', '', '', ''], font10, draw_reboot_screen)
@@ -191,6 +208,7 @@ try:
                         back(draw)
                         break
                     else:
+                        draw_end_screen()
                         os.system("sudo reboot")
                 if GPIO.input(19) == False:
                     draw(0, ['', '', '', ''], font10, draw_power_off_screen)
@@ -204,6 +222,7 @@ try:
                         back(draw)
                         break
                     else:
+                        draw_end_screen()
                         os.system("sudo poweroff")
 
 
