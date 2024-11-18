@@ -12,7 +12,7 @@ import RPi.GPIO as GPIO
 import traceback
 
 
-def draw_screen(num, text, fontxx, draw_func):
+def draw(num, text, fontxx, draw_func):
     Himage = Image.new('1', (epd.height, epd.width), 255)
     Himage.paste(Image.open('layout' + str(num) + '.png'))
     draw = ImageDraw.Draw(Himage)
@@ -122,10 +122,10 @@ try:
 
 
     def back(draw):
-        draw_screen(4, ['Display', 'Vitals', 'Docker', 'Power'], font10, draw_start_screen)
+        draw(4, ['Display', 'Vitals', 'Docker', 'Power'], font10, draw_start_screen)
 
 
-    draw_screen(0, ['', '', '', ''], font10, draw_booting_screen)
+    draw(0, ['', '', '', ''], font10, draw_booting_screen)
 
     time.sleep(3)
 
@@ -140,34 +140,34 @@ try:
 
     while True:
         if GPIO.input(5) == False:
-            draw_screen(4, ['Back', 'Time', 'Weather', 'Power'], font10, draw_display_screen)
+            draw(4, ['Back', 'Time', 'Weather', 'Power'], font10, draw_display_screen)
             while True:
                 if GPIO.input(5) == False:
                     back(draw)
                     break
 
         if GPIO.input(6) == False:
-            draw_screen(4, ['Back', 'CPU', 'Memory', 'Network'], font10, draw_vitals_screen)
+            draw(4, ['Back', 'CPU', 'Memory', 'Network'], font10, draw_vitals_screen)
             while True:
                 if GPIO.input(5) == False:
                     back(draw)
                     break
 
         if GPIO.input(13) == False:
-            draw_screen(4, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen)
+            draw(4, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen)
             while True:
                 if GPIO.input(5) == False:
                     back(draw)
                     break
 
         if GPIO.input(19) == False:
-            draw_screen(4, ['Back', 'Shutdown', 'Restart', 'Power Off'], font10, draw_power_screen)
+            draw(4, ['Back', 'Shutdown', 'Restart', 'Power Off'], font10, draw_power_screen)
             while True:
                 if GPIO.input(5) == False:
                     back(draw)
                     break
                 if GPIO.input(6) == False:
-                    draw_screen(0, ['', '', '', ''], font10, draw_stop_screen)
+                    draw(0, ['', '', '', ''], font10, draw_stop_screen)
                     start_time = time.time()
                     abort = False
                     while time.time() - start_time < 3:
@@ -180,7 +180,7 @@ try:
                     else:
                         os.system("sudo shutdown now")
                 if GPIO.input(13) == False:
-                    draw_screen(0, ['', '', '', ''], font10, draw_reboot_screen)
+                    draw(0, ['', '', '', ''], font10, draw_reboot_screen)
                     start_time = time.time()
                     abort = False
                     while time.time() - start_time < 3:
@@ -193,7 +193,7 @@ try:
                     else:
                         os.system("sudo reboot")
                 if GPIO.input(19) == False:
-                    draw_screen(0, ['', '', '', ''], font10, draw_power_off_screen)
+                    draw(0, ['', '', '', ''], font10, draw_power_off_screen)
                     start_time = time.time()
                     abort = False
                     while time.time() - start_time < 3:
@@ -219,7 +219,7 @@ try:
     #         break    
 
     # if n == 0, loc = (8, 8) else loc = (53, 8) ; (255, 167)
-    # draw_screen(4, ['Hello000', '', 'World',  '...'], font10, lambda draw: (
+    # draw(4, ['Hello000', '', 'World',  '...'], font10, lambda draw: (
     #     # draw.text((53, 8), 'Main box', font=font24, fill=0)
     #     draw.line((53, 8, 255, 167), fill = 0),
     #     draw.line((255, 8, 53, 167), fill = 0)
