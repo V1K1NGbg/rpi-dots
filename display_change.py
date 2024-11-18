@@ -76,8 +76,8 @@ try:
     def draw_booting_screen(draw):
         title = 'Hello There!'
         subtitle = 'Booting...'
-        draw.text(((264-draw.textlength(title, font=font24))/2, 90), title, font=font24, fill=0)
-        draw.text(((264-draw.textlength(subtitle, font=font18))/2, 110), subtitle, font=font18, fill=0)
+        draw.text(((264-draw.textlength(title, font=font24))/2, 70), title, font=font24, fill=0)
+        draw.text(((264-draw.textlength(subtitle, font=font18))/2, 90), subtitle, font=font18, fill=0)
 
     draw(0, ['', '', '', ''], font10, draw_booting_screen)
 
@@ -86,7 +86,7 @@ try:
     # if n == 0, loc = (8, 8) else loc = (53, 8) ; (255, 167)
     def draw_welcome_screen(draw):
         title = 'Welcome!'
-        draw.text(((264-draw.textlength(title, font=font24))/2 + 53, 90), title, font=font24, fill=0)
+        draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
 
     draw(4, ['', '', '', ''], font10, draw_welcome_screen)
 
@@ -100,14 +100,15 @@ try:
     #         print("Button Pressed")
     #         break
 
-    # if n == 0, loc = (8, 8) else loc = (53, 8) ; (255, 167)
-    draw(4, ['Hello000', '', 'World',  '...'], font10, lambda draw: (
-        # draw.text((53, 8), 'Main box', font=font24, fill=0)
-        draw.line((53, 8, 255, 167), fill = 0),
-        draw.line((255, 8, 53, 167), fill = 0)
-    ))
-
+    
     # --------------------------------------------
+
+    # if n == 0, loc = (8, 8) else loc = (53, 8) ; (255, 167)
+    # draw(4, ['Hello000', '', 'World',  '...'], font10, lambda draw: (
+    #     # draw.text((53, 8), 'Main box', font=font24, fill=0)
+    #     draw.line((53, 8, 255, 167), fill = 0),
+    #     draw.line((255, 8, 53, 167), fill = 0)
+    # ))
 
     # Example
     
