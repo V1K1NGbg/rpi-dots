@@ -98,7 +98,7 @@ try:
         title = 'Vitals'
         draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
 
-    
+
 
 
     def draw_docker_screen(draw):
