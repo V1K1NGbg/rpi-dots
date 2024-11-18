@@ -49,9 +49,6 @@ try:
     # 176 - 4(offset) / n + 8 = 8, 51, 94, 137
     text_locations = [(8, 8), (8, 51), (8, 94), (8, 137)]
 
-    # State
-    state = "main"
-
     # Data
     # ip = subprocess.check_output("hostname -I | awk '{print $1;}'", shell=True).decode('utf-8')
 
@@ -85,8 +82,12 @@ try:
         title = 'Welcome!'
         draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
 
-    def draw_stat_screen(draw):
-        title = 'Stats'
+    def draw_display_screen(draw):
+        title = 'Display'
+        draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
+
+    def draw_vitals_screen(draw):
+        title = 'Vitals'
         draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
 
     def draw_docker_screen(draw):
@@ -96,6 +97,12 @@ try:
     def draw_power_screen(draw):
         title = 'Power'
         draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
+
+
+
+    def back(draw):
+        draw(4, ['Display', 'Vitals', 'Docker', 'Power'], font10, draw_start_screen)
+
 
 
     draw(0, ['', '', '', ''], font10, draw_booting_screen)
@@ -108,26 +115,47 @@ try:
     GPIO.setup(13, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(19, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-    draw(4, ['Stats', 'Docker', '', 'Power'], font10, draw_start_screen)
+    back(draw)
+
+
 
     while True:
         if GPIO.input(5) == False:
-            draw(4, ['Stats', 'Docker', '', 'Power'], font10, draw_stat_screen)
+            draw(4, ['Back', 'Time', 'Weather', 'Power'], font10, draw_display_screen)
             while True:
                 if GPIO.input(5) == False:
-                    draw(4, ['Stats', 'Docker', '', 'Power'], font10, draw_start_screen)
+                    back(draw)
+                    break
+
         if GPIO.input(6) == False:
-            draw(4, ['Stats', 'Docker', '', 'Power'], font10, draw_docker_screen)
+            draw(4, ['Back', 'CPU', 'Memory', 'Network'], font10, draw_vitals_screen)
             while True:
                 if GPIO.input(5) == False:
-                    draw(4, ['Stats', 'Docker', '', 'Power'], font10, draw_start_screen)
-        # if GPIO.input(13) == False:
-        #     draw(4, ['Stats', 'Docker', '', 'Power'], font10, draw_start_screen)
+                    back(draw)
+                    break
+
+        if GPIO.input(13) == False:
+            draw(4, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen)
+            while True:
+                if GPIO.input(5) == False:
+                    back(draw)
+                    break
+
         if GPIO.input(19) == False:
-            draw(4, ['Stats', 'Docker', '', 'Power'], font10, draw_power_screen)
+            draw(4, ['Back', 'Shutdown', 'Restart', 'Power Off'], font10, draw_power_screen)
             while True:
                 if GPIO.input(5) == False:
-                    draw(4, ['Stats', 'Docker', '', 'Power'], font10, draw_start_screen)
+                    back(draw)
+                    break
+                if GPIO.input(6) == False:
+                    os.system("sudo shutdown now")
+                    break
+                if GPIO.input(13) == False:
+                    os.system("sudo reboot")
+                    break
+                if GPIO.input(19) == False:
+                    os.system("sudo poweroff")
+                    break
 
 
     # --------------------------------------------
