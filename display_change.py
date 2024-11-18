@@ -132,6 +132,7 @@ try:
 
     
     def draw_end_screen():
+        # WHITE BACKGROUND!!!
         Himage = Image.new('1', (epd.height, epd.width), 255)
         Himage.paste(Image.open('rpi.png'))
         epd.display(epd.getbuffer(Himage))
