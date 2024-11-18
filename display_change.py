@@ -85,19 +85,19 @@ try:
         title = 'Shutting Down...'
         subtitle = 'press any button to cancel'
         draw.text(((264-draw.textlength(title, font=font24))/2, 70), title, font=font24, fill=0)
-        draw.text(((264-draw.textlength(subtitle, font=font18))/2, 100), subtitle, font=font18, fill=0)
+        draw.text(((264-draw.textlength(subtitle, font=font12))/2, 100), subtitle, font=font12, fill=0)
 
     def draw_reboot_screen(draw):
         title = 'Rebooting...'
         subtitle = 'press any button to cancel'
         draw.text(((264-draw.textlength(title, font=font24))/2, 70), title, font=font24, fill=0)
-        draw.text(((264-draw.textlength(subtitle, font=font18))/2, 100), subtitle, font=font18, fill=0)
+        draw.text(((264-draw.textlength(subtitle, font=font12))/2, 100), subtitle, font=font12, fill=0)
 
     def draw_power_off_screen(draw):
         title = 'Powering Off...'
         subtitle = 'press any button to cancel'
         draw.text(((264-draw.textlength(title, font=font24))/2, 70), title, font=font24, fill=0)
-        draw.text(((264-draw.textlength(subtitle, font=font18))/2, 100), subtitle, font=font18, fill=0)
+        draw.text(((264-draw.textlength(subtitle, font=font12))/2, 100), subtitle, font=font12, fill=0)
 
 
     def draw_start_screen(draw):
