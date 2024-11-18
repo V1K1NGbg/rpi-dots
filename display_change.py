@@ -73,21 +73,22 @@ try:
     # --------------------------------------------
 
     # if n == 0, loc = (8, 8) else loc = (53, 8) ; (255, 167)
-    draw(0, ['', '', '', ''], font10, lambda draw: (
-        title = 'Hello There!',
-        subtitle = 'Booting...',
-        draw.text(((264-draw.textlength(title, font=font24))/2, 90), title, font=font24, fill=0),
+    def draw_booting_screen(draw):
+        title = 'Hello There!'
+        subtitle = 'Booting...'
+        draw.text(((264-draw.textlength(title, font=font24))/2, 90), title, font=font24, fill=0)
         draw.text(((264-draw.textlength(subtitle, font=font18))/2, 110), subtitle, font=font18, fill=0)
-    ))
+
+    draw(0, ['', '', '', ''], font10, draw_booting_screen)
 
     time.sleep(3)
 
     # if n == 0, loc = (8, 8) else loc = (53, 8) ; (255, 167)
-    draw(4, ['', '', '', ''], font10, lambda draw: (
-        title = 'Welcome!',
+    def draw_welcome_screen(draw):
+        title = 'Welcome!'
         draw.text(((264-draw.textlength(title, font=font24))/2 + 53, 90), title, font=font24, fill=0)
 
-    ))
+    draw(4, ['', '', '', ''], font10, draw_welcome_screen)
 
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(5, GPIO.IN, pull_up_down=GPIO.PUD_UP) #5, 6, 13, 19
