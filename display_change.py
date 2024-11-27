@@ -167,11 +167,13 @@ try:
                     main(draw)
                     break
                 if GPIO.input(6) == False:
-                    draw(4, ['', '', '', ''], font10, draw_main_screen)
+                    draw(4, ['', '', '', ''], font10, draw_display_main_screen)
                 if GPIO.input(13) == False:
-                    draw(4, ['', '', '', ''], font10, draw_weather_and_time_screen)
+                    draw(4, ['', '', '', ''], font10, draw_display_weather_and_time_screen)
                 if GPIO.input(19) == False:
-                    draw(4, ['', '', '', ''], font10, draw_stats_screen)
+                    draw(4, ['', '', '', ''], font10, draw_display_stats_screen)
+
+
 
         if GPIO.input(6) == False or GPIO.input(13) == False:
             # draw(4, ['Back', 'CPU', 'Memory', 'Network'], font10, draw_vitals_screen)
@@ -181,12 +183,16 @@ try:
                     main(draw)
                     break
 
+
+
         # if GPIO.input(13) == False:
         #     draw(4, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen)
         #     while True:
         #         if GPIO.input(5) == False:
         #             main(draw)
         #             break
+
+
 
         if GPIO.input(19) == False:
             draw(4, ['Back', 'Shutdown', 'Restart', 'Power Off'], font10, draw_power_screen)
