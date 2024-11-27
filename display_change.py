@@ -126,7 +126,7 @@ try:
 
     # --------------------------------------------
 
-    draw(0, options, font10, draw_booting_screen)
+    # draw(0, options, font10, draw_booting_screen)
 
     # time.sleep(3)
 
@@ -149,11 +149,11 @@ try:
                     main(draw)
                     break
                 if GPIO.input(6) == False:
-                    draw(4, options, font10, draw_display_main_screen, True)
+                    draw(4, options, font10, draw_display_main_screen)
                 if GPIO.input(13) == False:
-                    draw(4, options, font10, draw_display_weather_and_time_screen, True)
+                    draw(4, options, font10, draw_display_weather_and_time_screen)
                 if GPIO.input(19) == False:
-                    draw(4, options, font10, draw_display_stats_screen, True)
+                    draw(4, options, font10, draw_display_stats_screen)
 
 
 
