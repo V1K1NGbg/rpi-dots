@@ -11,12 +11,17 @@ from PIL import Image,ImageDraw,ImageFont
 import RPi.GPIO as GPIO
 import traceback
 
+saved = ['','','','']
 
-def draw(num, text, fontxx, draw_func):
+
+def draw(num, text, fontxx, draw_func, old):
     Himage = Image.new('1', (epd.height, epd.width), 255)
     Himage.paste(Image.open('layout' + str(num) + '.png'))
     draw = ImageDraw.Draw(Himage)
+    if old == True:
+        text = saved
     for t in range(4):
+        saved[t] = text[t]
         if text[t] == '':
             continue
         if draw.textlength(text[t], font=fontxx) > 32.0:
@@ -148,7 +153,7 @@ try:
 
     draw(0, ['', '', '', ''], font10, draw_booting_screen)
 
-    time.sleep(3)
+    # time.sleep(3)
 
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(5, GPIO.IN, pull_up_down=GPIO.PUD_UP)
@@ -167,11 +172,11 @@ try:
                     main(draw)
                     break
                 if GPIO.input(6) == False:
-                    draw(4, ['', '', '', ''], font10, draw_display_main_screen)
+                    draw(4, ['', '', '', ''], font10, draw_display_main_screen, True)
                 if GPIO.input(13) == False:
-                    draw(4, ['', '', '', ''], font10, draw_display_weather_and_time_screen)
+                    draw(4, ['', '', '', ''], font10, draw_display_weather_and_time_screen, True)
                 if GPIO.input(19) == False:
-                    draw(4, ['', '', '', ''], font10, draw_display_stats_screen)
+                    draw(4, ['', '', '', ''], font10, draw_display_stats_screen, True)
 
 
 
