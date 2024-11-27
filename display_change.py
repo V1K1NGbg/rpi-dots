@@ -132,7 +132,6 @@ try:
 
     
     def draw_end_screen():
-        # WHITE BACKGROUND!!!
         Himage = Image.new('1', (epd.height, epd.width), 255)
         Himage.paste(Image.open('rpi.png'))
         epd.display(epd.getbuffer(Himage))
@@ -142,7 +141,7 @@ try:
         draw(4, ['Display', 'Vitals', 'Docker', 'Power'], font10, draw_start_screen)
 
 
-    draw(0, ['', '', '', ''], font10, draw_booting_screen)
+    draw(0, ['', '', '', ''], font10, draw_end_screen)
 
     time.sleep(3)
 
