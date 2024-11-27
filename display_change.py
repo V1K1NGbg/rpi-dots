@@ -173,7 +173,7 @@ try:
                 if GPIO.input(19) == False:
                     draw(4, ['', '', '', ''], font10, draw_stats_screen)
 
-        if GPIO.input(6) == False || GPIO.input(13) == False:
+        if GPIO.input(6) == False or GPIO.input(13) == False:
             # draw(4, ['Back', 'CPU', 'Memory', 'Network'], font10, draw_vitals_screen)
             draw(4, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen)
             while True:
