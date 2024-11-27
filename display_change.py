@@ -141,7 +141,8 @@ try:
         draw(4, ['Display', 'Vitals', 'Docker', 'Power'], font10, draw_start_screen)
 
 
-    draw(0, ['', '', '', ''], font10, draw_end_screen)
+    # draw(0, ['', '', '', ''], font10, draw_booting_screen)
+    draw_end_screen();
 
     time.sleep(3)
 
