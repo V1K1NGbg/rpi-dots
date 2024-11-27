@@ -14,7 +14,7 @@ import traceback
 saved = ['','','','']
 
 
-def draw(num, text, fontxx, draw_func, old):
+def draw(num, text, fontxx, draw_func, old = False):
     Himage = Image.new('1', (epd.height, epd.width), 255)
     Himage.paste(Image.open('layout' + str(num) + '.png'))
     draw = ImageDraw.Draw(Himage)
