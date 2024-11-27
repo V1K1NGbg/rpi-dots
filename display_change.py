@@ -20,8 +20,8 @@ def draw(num, text, fontxx, draw_func, old = False):
     draw = ImageDraw.Draw(Himage)
     if old == True:
         text = saved
+    saved = text
     for t in range(4):
-        saved[t] = text[t]
         if text[t] == '':
             continue
         if draw.textlength(text[t], font=fontxx) > 32.0:
