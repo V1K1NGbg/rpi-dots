@@ -11,16 +11,10 @@ from PIL import Image,ImageDraw,ImageFont
 import RPi.GPIO as GPIO
 import traceback
 
-saved = ['','','','']
-
-
-def draw(num, text, fontxx, draw_func, old = False):
+def draw(num, text, fontxx, draw_func):
     Himage = Image.new('1', (epd.height, epd.width), 255)
     Himage.paste(Image.open('layout' + str(num) + '.png'))
     draw = ImageDraw.Draw(Himage)
-    if old == True:
-        text = saved
-    saved = text
     for t in range(4):
         if text[t] == '':
             continue
@@ -37,7 +31,6 @@ def draw(num, text, fontxx, draw_func, old = False):
             draw.text(text_locations[t], text[t], font=fontxx, fill=0)
     draw_func(draw)
     epd.display(epd.getbuffer(Himage))
-
 
 try:
 
@@ -56,28 +49,9 @@ try:
 
     # 176 - 4(offset) / n + 8 = 8, 51, 94, 137
     text_locations = [(8, 8), (8, 51), (8, 94), (8, 137)]
-
-    # Data
-    # ip = subprocess.check_output("hostname -I | awk '{print $1;}'", shell=True).decode('utf-8')
-
-    # Create Image
-    # Himage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
-    # draw = ImageDraw.Draw(Himage)
-
-    # Draw
-    # draw.text((0, 0), ip , font = font24, fill = 0)
-    # draw.line((20, 50, 70, 100), fill = 0)
-    # draw.line((70, 50, 20, 100), fill = 0)
-    # draw.rectangle((20, 50, 70, 100), outline = 0)
-
-    # Himage.paste(Image.open('layout0.png'))
-
-    # Display
-    # epd.display(epd.getbuffer(Himage))
-
+    options = ['', '', '', '']
 
     # --------------------------------------------
-
 
     # if n == 0, loc = (8, 8) else loc = (53, 8) ; (255, 167)
     def draw_booting_screen(draw):
@@ -90,7 +64,7 @@ try:
         title = 'Welcome!'
         draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
 
-
+    # --------------------------------------------
 
     def draw_display_screen(draw):
         title = 'Display'
@@ -108,14 +82,13 @@ try:
         title = 's'
         draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
 
-        
+    # --------------------------------------------
 
     def draw_docker_screen(draw):
         title = 'Docker'
         draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
 
-
-
+    # --------------------------------------------
 
     def draw_power_screen(draw):
         title = 'Power'
@@ -139,6 +112,7 @@ try:
         draw.text(((264-draw.textlength(title, font=font24))/2, 70), title, font=font24, fill=0)
         draw.text(((264-draw.textlength(subtitle, font=font12))/2, 100), subtitle, font=font12, fill=0)
 
+    # --------------------------------------------
     
     def draw_end_screen():
         Himage = Image.new('1', (epd.height, epd.width), 255)
@@ -150,8 +124,9 @@ try:
         # draw(4, ['Display', 'Vitals', 'Docker', 'Power'], font10, draw_start_screen)
         draw(3, ['Display', 'Docker', '', 'Power'], font10, draw_start_screen)
 
+    # --------------------------------------------
 
-    draw(0, ['', '', '', ''], font10, draw_booting_screen)
+    draw(0, options, font10, draw_booting_screen)
 
     # time.sleep(3)
 
@@ -163,20 +138,22 @@ try:
 
     main(draw)
 
+    # --------------------------------------------
 
     while True:
         if GPIO.input(5) == False:
-            draw(4, ['Back', 'Main', 'Time/Weather', 'Stats'], font10, draw_display_screen)
+            options = ['Back', 'Main', 'Time/Weather', 'Stats']
+            draw(4, options, font10, draw_display_screen)
             while True:
                 if GPIO.input(5) == False:
                     main(draw)
                     break
                 if GPIO.input(6) == False:
-                    draw(4, ['', '', '', ''], font10, draw_display_main_screen, True)
+                    draw(4, options, font10, draw_display_main_screen, True)
                 if GPIO.input(13) == False:
-                    draw(4, ['', '', '', ''], font10, draw_display_weather_and_time_screen, True)
+                    draw(4, options, font10, draw_display_weather_and_time_screen, True)
                 if GPIO.input(19) == False:
-                    draw(4, ['', '', '', ''], font10, draw_display_stats_screen, True)
+                    draw(4, options, font10, draw_display_stats_screen, True)
 
 
 
@@ -251,6 +228,25 @@ try:
 
     # --------------------------------------------
 
+
+
+    # Data
+    # ip = subprocess.check_output("hostname -I | awk '{print $1;}'", shell=True).decode('utf-8')
+
+    # Create Image
+    # Himage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
+    # draw = ImageDraw.Draw(Himage)
+
+    # Draw
+    # draw.text((0, 0), ip , font = font24, fill = 0)
+    # draw.line((20, 50, 70, 100), fill = 0)
+    # draw.line((70, 50, 20, 100), fill = 0)
+    # draw.rectangle((20, 50, 70, 100), outline = 0)
+
+    # Himage.paste(Image.open('layout0.png'))
+
+    # Display
+    # epd.display(epd.getbuffer(Himage))
 
     # GPIO.add_event_detect(17, GPIO.FALLING, callback=lambda pin: self.button_pressed(1, button_handler), bouncetime=200)
 
