@@ -70,11 +70,11 @@ try:
         title = 'Display'
         draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
 
-    def draw_display_main_screen(draw):
+    def draw_display_dock_screen(draw):
         title = 'Main'
         draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
         
-    def draw_display_weather_and_time_screen(draw):
+    def draw_display_outside_screen(draw):
         title = 'w'
         draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
 
@@ -142,16 +142,16 @@ try:
 
     while True:
         if GPIO.input(5) == False:
-            options = ['Back', 'Main', 'Time/Weather', 'Stats']
+            options = ['Back', 'Dock', 'World', 'Stats']
             draw(4, options, font10, draw_display_screen)
             while True:
                 if GPIO.input(5) == False:
                     main(draw)
                     break
                 if GPIO.input(6) == False:
-                    draw(4, options, font10, draw_display_main_screen)
+                    draw(4, options, font10, draw_display_dock_screen)
                 if GPIO.input(13) == False:
-                    draw(4, options, font10, draw_display_weather_and_time_screen)
+                    draw(4, options, font10, draw_display_outside_screen)
                 if GPIO.input(19) == False:
                     draw(4, options, font10, draw_display_stats_screen)
 
