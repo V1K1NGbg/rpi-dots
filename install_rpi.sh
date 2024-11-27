@@ -20,3 +20,9 @@ sudo apt-get install python3-numpy
 sudo apt-get install python3-spidev
 sudo apt-get install python3-gpiozero
 sudo apt-get install python3-rpi.gpio
+
+git clone https://github.com/V1K1NGbg/rpi-dots.git
+
+cd rpi-dots
+
+python3 display_change.py

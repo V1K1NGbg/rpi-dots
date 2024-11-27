@@ -86,20 +86,24 @@ try:
         draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
 
 
+
     def draw_display_screen(draw):
         title = 'Display'
         draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
 
-    # def draw_time_screen(draw):
+    def draw_display_main_screen(draw):
+        title = 'Main'
+        draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
         
-    
-
-    def draw_vitals_screen(draw):
-        title = 'Vitals'
+    def draw_display_weather_and_time_screen(draw):
+        title = 'w'
         draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
 
+    def draw_display_stats_screen(draw):
+        title = 's'
+        draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
 
-
+        
 
     def draw_docker_screen(draw):
         title = 'Docker'
@@ -112,13 +116,13 @@ try:
         title = 'Power'
         draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
 
-    def draw_stop_screen(draw):
+    def draw_power_stop_screen(draw):
         title = 'Shutting Down...'
         subtitle = 'press any button to cancel'
         draw.text(((264-draw.textlength(title, font=font24))/2, 70), title, font=font24, fill=0)
         draw.text(((264-draw.textlength(subtitle, font=font12))/2, 100), subtitle, font=font12, fill=0)
 
-    def draw_reboot_screen(draw):
+    def draw_power_reboot_screen(draw):
         title = 'Rebooting...'
         subtitle = 'press any button to cancel'
         draw.text(((264-draw.textlength(title, font=font24))/2, 70), title, font=font24, fill=0)
@@ -137,12 +141,12 @@ try:
         epd.display(epd.getbuffer(Himage))
 
 
-    def back(draw):
-        draw(4, ['Display', 'Vitals', 'Docker', 'Power'], font10, draw_start_screen)
+    def main(draw):
+        # draw(4, ['Display', 'Vitals', 'Docker', 'Power'], font10, draw_start_screen)
+        draw(3, ['Display', 'Docker', '', 'Power'], font10, draw_start_screen)
 
 
-    # draw(0, ['', '', '', ''], font10, draw_booting_screen)
-    draw_end_screen();
+    draw(0, ['', '', '', ''], font10, draw_booting_screen)
 
     time.sleep(3)
 
@@ -152,39 +156,46 @@ try:
     GPIO.setup(13, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(19, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-    back(draw)
+    main(draw)
 
 
     while True:
         if GPIO.input(5) == False:
-            draw(4, ['Back', 'Time', 'Weather', 'Power'], font10, draw_display_screen)
+            draw(4, ['Back', 'Main', 'Time/Weather', 'Stats'], font10, draw_display_screen)
             while True:
                 if GPIO.input(5) == False:
-                    back(draw)
+                    main(draw)
                     break
+                if GPIO.input(6) == False:
+                    draw(4, ['', '', '', ''], font10, draw_main_screen)
+                if GPIO.input(13) == False:
+                    draw(4, ['', '', '', ''], font10, draw_weather_and_time_screen)
+                if GPIO.input(19) == False:
+                    draw(4, ['', '', '', ''], font10, draw_stats_screen)
 
-        if GPIO.input(6) == False:
-            draw(4, ['Back', 'CPU', 'Memory', 'Network'], font10, draw_vitals_screen)
-            while True:
-                if GPIO.input(5) == False:
-                    back(draw)
-                    break
-
-        if GPIO.input(13) == False:
+        if GPIO.input(6) == False || GPIO.input(13) == False:
+            # draw(4, ['Back', 'CPU', 'Memory', 'Network'], font10, draw_vitals_screen)
             draw(4, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen)
             while True:
                 if GPIO.input(5) == False:
-                    back(draw)
+                    main(draw)
                     break
+
+        # if GPIO.input(13) == False:
+        #     draw(4, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen)
+        #     while True:
+        #         if GPIO.input(5) == False:
+        #             main(draw)
+        #             break
 
         if GPIO.input(19) == False:
             draw(4, ['Back', 'Shutdown', 'Restart', 'Power Off'], font10, draw_power_screen)
             while True:
                 if GPIO.input(5) == False:
-                    back(draw)
+                    main(draw)
                     break
                 if GPIO.input(6) == False:
-                    draw(0, ['', '', '', ''], font10, draw_stop_screen)
+                    draw(0, ['', '', '', ''], font10, draw_power_stop_screen)
                     start_time = time.time()
                     abort = False
                     while time.time() - start_time < 3:
@@ -192,13 +203,13 @@ try:
                             abort = True
                             break
                     if abort:
-                        back(draw)
+                        main(draw)
                         break
                     else:
                         draw_end_screen()
                         os.system("sudo shutdown now")
                 if GPIO.input(13) == False:
-                    draw(0, ['', '', '', ''], font10, draw_reboot_screen)
+                    draw(0, ['', '', '', ''], font10, draw_power_reboot_screen)
                     start_time = time.time()
                     abort = False
                     while time.time() - start_time < 3:
@@ -206,7 +217,7 @@ try:
                             abort = True
                             break
                     if abort:
-                        back(draw)
+                        main(draw)
                         break
                     else:
                         draw_end_screen()
@@ -220,7 +231,7 @@ try:
                             abort = True
                             break
                     if abort:
-                        back(draw)
+                        main(draw)
                         break
                     else:
                         draw_end_screen()
