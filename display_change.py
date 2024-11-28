@@ -81,7 +81,6 @@ try:
     def draw_display_world_screen(draw):\
         title = 'Weather'
         draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
-        
         try:
             response = requests.get(f'http://api.openweathermap.org/data/2.5/weather?q=London&appid={APPID}')
             weather_data = response.json()
