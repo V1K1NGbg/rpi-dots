@@ -16,19 +16,20 @@ def draw(num, text, fontxx, draw_func):
     Himage.paste(Image.open('layout' + str(num) + '.png'))
     draw = ImageDraw.Draw(Himage)
     for t in range(4):
-        if text[t] == '':
+        tt = text[t]
+        if tt == '':
             continue
-        if draw.textlength(text[t], font=fontxx) > 32.0:
+        if draw.textlength(tt, font=fontxx) > 32.0:
             location = text_locations[t]
-            while text[t] != "":
+            while tt != "":
                 line = ""
-                while text[t] and draw.textlength(line + text[t][0], font=fontxx) <= 32.0:
-                    line += text[t][0]
-                    text[t] = text[t][1:]
+                while tt and draw.textlength(line + tt[0], font=fontxx) <= 32.0:
+                    line += tt[0]
+                    tt = tt[1:]
                 draw.text(location, line, font=fontxx, fill=0)
                 location = (location[0], location[1] + 14)
         else:
-            draw.text(text_locations[t], text[t], font=fontxx, fill=0)
+            draw.text(text_locations[t], tt, font=fontxx, fill=0)
     draw_func(draw)
     epd.display(epd.getbuffer(Himage))
 
