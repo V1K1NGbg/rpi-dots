@@ -74,7 +74,7 @@ try:
         title = 'Main'
         draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
         
-    def draw_display_outside_screen(draw):
+    def draw_display_world_screen(draw):
         title = 'w'
         draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
 
@@ -151,7 +151,7 @@ try:
                 if GPIO.input(6) == False:
                     draw(4, options, font10, draw_display_dock_screen)
                 if GPIO.input(13) == False:
-                    draw(4, options, font10, draw_display_outside_screen)
+                    draw(4, options, font10, draw_display_world_screen)
                 if GPIO.input(19) == False:
                     draw(4, options, font10, draw_display_stats_screen)
 
