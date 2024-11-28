@@ -15,7 +15,7 @@ import const
 
 def draw(num, text, fontxx, draw_func):
     Himage = Image.new('1', (epd.height, epd.width), 255)
-    Himage.paste(Image.open('layout' + str(num) + '.png'))
+    Himage.paste(Image.open('imgs/layout' + str(num) + '.png'))
     draw = ImageDraw.Draw(Himage)
     for t in range(4):
         tt = text[t]
@@ -75,7 +75,7 @@ try:
         draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
 
     def draw_display_dock_screen(draw):
-        title = APIKEY
+        title = 'Dock'
         draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
         
     def draw_display_world_screen(draw):
@@ -132,7 +132,7 @@ try:
     
     def draw_end_screen():
         Himage = Image.new('1', (epd.height, epd.width), 255)
-        Himage.paste(Image.open('rpi.png'))
+        Himage.paste(Image.open('imgs/rpi.png'))
         epd.display(epd.getbuffer(Himage))
 
 
