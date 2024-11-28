@@ -143,12 +143,14 @@ try:
     while True:
         if GPIO.input(5) == False:
             options = ['Back', 'Dock', 'World', 'Stats']
+            print(options)
             draw(4, options, font10, draw_display_screen)
             while True:
                 if GPIO.input(5) == False:
                     main(draw)
                     break
                 if GPIO.input(6) == False:
+                    print(options)
                     draw(4, options, font10, draw_display_dock_screen)
                 if GPIO.input(13) == False:
                     draw(4, options, font10, draw_display_world_screen)
