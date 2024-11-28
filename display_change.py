@@ -78,7 +78,7 @@ try:
         title = APIKEY
         draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
         
-    def draw_display_world_screen(draw):\
+    def draw_display_world_screen(draw):
         title = 'Weather'
         draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
         try:
