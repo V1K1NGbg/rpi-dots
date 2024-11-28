@@ -54,6 +54,8 @@ try:
     text_locations = [(8, 8), (8, 51), (8, 94), (8, 137)]
     options = ['', '', '', '']
     APPID = const.APPID
+    lat = const.lat
+    lon = const.lon
 
     # --------------------------------------------
 
@@ -82,17 +84,30 @@ try:
         title = 'Weather'
         draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
         try:
-            response = requests.get(f'http://api.openweathermap.org/data/2.5/weather?q=London&appid={APPID}')
+            response = requests.get(f'http://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&units=metric&appid={APPID}')
             weather_data = response.json()
-            if weather_data.get('weather'):
-                weather_description = weather_data['weather'][0]['description']
-                temperature = weather_data['main']['temp'] - 273.15
+            if 'current' in weather_data:
+                current_weather = weather_data['current']
+                weather_description = current_weather['weather'][0]['description']
+                temperature = current_weather['temp']
+                humidity = current_weather['humidity']
+                pressure = current_weather['pressure']
+                wind_speed = current_weather['wind_speed']
+                wind_direction = current_weather['wind_deg']
+                sunrise = time.strftime('%H:%M', time.gmtime(current_weather['sunrise'] + weather_data['timezone_offset']))
+                sunset = time.strftime('%H:%M', time.gmtime(current_weather['sunset'] + weather_data['timezone_offset']))
                 weather_text = f'{weather_description.capitalize()}, {temperature:.1f}°C'
+                
                 draw.text(((264-draw.textlength(weather_text, font=font18))/2, 100), weather_text, font=font18, fill=0)
+                draw.text((10, 130), f'Humidity: {humidity}%', font=font12, fill=0)
+                draw.text((10, 150), f'Pressure: {pressure} hPa', font=font12, fill=0)
+                draw.text((10, 170), f'Wind: {wind_speed} m/s, {wind_direction}°', font=font12, fill=0)
+                draw.text((10, 190), f'Sunrise: {sunrise}', font=font12, fill=0)
+                draw.text((10, 210), f'Sunset: {sunset}', font=font12, fill=0)
             else:
-                draw.text(((264-draw.textlength('Weather data not available', font=font18))/2, 100), 'Weather data not available', font=font18, fill=0)
+                draw.text(((264-draw.textlength('Weather data not available', font=font18) + 53)/2, 70), 'Weather data not available', font=font18, fill=0)
         except Exception as e:
-            draw.text(((264-draw.textlength('Error fetching weather data', font=font18))/2, 100), 'Error fetching weather data', font=font18, fill=0)
+            draw.text(((264-draw.textlength('Error fetching weather data', font=font18) + 53)/2, 70), 'Error fetching weather data', font=font18, fill=0)
 
     def draw_display_stats_screen(draw):
         title = 's'
