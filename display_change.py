@@ -10,7 +10,7 @@ import time
 from PIL import Image,ImageDraw,ImageFont
 import RPi.GPIO as GPIO
 import traceback
-
+import requests
 import const
 
 def draw(num, text, fontxx, draw_func):
@@ -78,9 +78,22 @@ try:
         title = APIKEY
         draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
         
-    def draw_display_world_screen(draw):
-        title = 'w'
+    def draw_display_world_screen(draw):\
+        title = 'Weather'
         draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
+        
+        try:
+            response = requests.get(f'http://api.openweathermap.org/data/2.5/weather?q=London&appid={APPID}')
+            weather_data = response.json()
+            if weather_data.get('weather'):
+                weather_description = weather_data['weather'][0]['description']
+                temperature = weather_data['main']['temp'] - 273.15
+                weather_text = f'{weather_description.capitalize()}, {temperature:.1f}°C'
+                draw.text(((264-draw.textlength(weather_text, font=font18))/2, 100), weather_text, font=font18, fill=0)
+            else:
+                draw.text(((264-draw.textlength('Weather data not available', font=font18))/2, 100), 'Weather data not available', font=font18, fill=0)
+        except Exception as e:
+            draw.text(((264-draw.textlength('Error fetching weather data', font=font18))/2, 100), 'Error fetching weather data', font=font18, fill=0)
 
     def draw_display_stats_screen(draw):
         title = 's'
