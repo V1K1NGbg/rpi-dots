@@ -26,3 +26,7 @@ git clone https://github.com/V1K1NGbg/rpi-dots.git
 cd rpi-dots
 
 python3 display_change.py
+
+# fix key
+
+# auto run
