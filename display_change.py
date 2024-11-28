@@ -53,7 +53,7 @@ try:
     # 176 - 4(offset) / n + 8 = 8, 51, 94, 137
     text_locations = [(8, 8), (8, 51), (8, 94), (8, 137)]
     options = ['', '', '', '']
-    APIKEY = const.APIKEY
+    APPID = const.APPID
 
     # --------------------------------------------
 
