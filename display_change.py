@@ -111,13 +111,13 @@ try:
             mem_info = subprocess.check_output("free -m | awk 'NR==2{printf \"%.2f%%\", $3*100/$2 }'", shell=True).decode("utf-8").strip()
             temp = subprocess.check_output("vcgencmd measure_temp | egrep -o '[0-9]*\.[0-9]*'", shell=True).decode('utf-8').strip()
             ip_address = subprocess.check_output("hostname -I | awk '{print $1}'", shell=True).decode('utf-8').strip()
-            uptime = subprocess.check_output("awk '{print $3, $4}' /proc/uptime", shell=True).decode('utf-8').strip()
+            uptime = ' '.join(subprocess.check_output("uptime -p", shell=True).decode('utf-8').strip().split(' ')[1:])
 
             stats_text = (f"CPU: {cpu_usage}%\n"
                           f"Mem: {mem_info}\n"
                           f"Temp: {temp}°C\n"
                           f"IP: {ip_address}\n"
-                          f"Uptime: {uptime}\n")
+                          f"Up: {uptime}\n")
             draw.text((53, 8), stats_text, font=font18, fill=0)
         except Exception as e:
             logging.error(f"Error fetching system stats: {e}")
