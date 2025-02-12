@@ -7,6 +7,7 @@ sudo apt update -y && sudo apt upgrade -y
 curl -sSL https://get.docker.com | sh
 
 sudo usermod -aG docker $USER
+newgrp docker
 
 # Enable screen
 sudo raspi-config
@@ -24,6 +25,8 @@ sudo apt-get install python3-rpi.gpio
 git clone https://github.com/V1K1NGbg/rpi-dots.git
 
 cd rpi-dots
+
+# GET CONSTANTS
 
 python3 display_change.py
 
