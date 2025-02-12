@@ -82,7 +82,7 @@ try:
         
     def draw_display_world_screen(draw):
         title = 'Weather'
-        draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
+        # draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
         try:
             url = f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={APPID}&units=metric"
             response = requests.get(url)
@@ -93,12 +93,12 @@ try:
             temp_min = weather_data['main']['temp_min']
             temp_max = weather_data['main']['temp_max']
             humidity = weather_data['main']['humidity']
-            precipitation = weather_data.get('rain', {}).get('1h', 0)
+            precipitation = weather_data.get('rain', {}).get('3h', 0)
             weather_text = (f"{city}\n{weather_desc.capitalize()}\n"
                             f"Temp: {temp}°C\nMin Temp: {temp_min}°C\n"
                             f"Max Temp: {temp_max}°C\nHumidity: {humidity}%\n"
                             f"Precipitation: {precipitation}mm")
-            draw.text((53, 8), weather_text, font=font12, fill=0)
+            draw.text((53, 8), weather_text, font=font18, fill=0)
         except Exception as e:
             logging.error(f"Error fetching weather data: {e}")
         
