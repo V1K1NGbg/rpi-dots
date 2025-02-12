@@ -94,17 +94,33 @@ try:
             temp_max = weather_data['main']['temp_max']
             humidity = weather_data['main']['humidity']
             precipitation = weather_data.get('rain', {}).get('3h', 0)
+
             weather_text = (f"{city}\n{weather_desc.capitalize()}\n"
                             f"Temp: {temp}°C\nMin Temp: {temp_min}°C\n"
                             f"Max Temp: {temp_max}°C\nHumidity: {humidity}%\n"
-                            f"Precipitation: {precipitation}mm")
+                            f"Rain for next 3h: {precipitation}mm")
             draw.text((53, 8), weather_text, font=font18, fill=0)
         except Exception as e:
             logging.error(f"Error fetching weather data: {e}")
         
     def draw_display_stats_screen(draw):
-        title = 's'
-        draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
+        title = 'Stats'
+        # draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
+        try:
+            cpu_usage = subprocess.check_output("top -bn1 | grep 'Cpu(s)' | sed 's/.*, *\([0-9.]*\)%* id.*/\\1/' | awk '{print 100 - $1}'", shell=True).decode('utf-8').strip()
+            mem_info = subprocess.check_output("free -m | awk 'NR==2{printf \"Memory Usage: %s/%sMB (%.2f%%)\", $3,$2,$3*100/$2 }'", shell=True).decode('utf-8').strip()
+            temp = subprocess.check_output("vcgencmd measure_temp | egrep -o '[0-9]*\.[0-9]*'", shell=True).decode('utf-8').strip()
+            net_info = subprocess.check_output("ifstat -i wlan0 1 1 | awk 'NR==3 {print \"Up: \" $1 \" KB/s, Down: \" $2 \" KB/s\"}'", shell=True).decode('utf-8').strip()
+            ip_address = subprocess.check_output("hostname -I | awk '{print $1}'", shell=True).decode('utf-8').strip()
+
+            stats_text = (f"CPU: {cpu_usage}%\n"
+                  f"Mem: {mem_info}\n"
+                  f"Temp: {temp}°C\n"
+                  f"Net: {net_info}\n"
+                  f"IP: {ip_address}")
+            draw.text((53, 8), stats_text, font=font18, fill=0)
+        except Exception as e:
+            logging.error(f"Error fetching system stats: {e}")
 
     # --------------------------------------------
 
