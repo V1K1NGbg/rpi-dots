@@ -87,11 +87,18 @@ try:
             url = f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={APPID}&units=metric"
             response = requests.get(url)
             weather_data = response.json()
+            city = weather_data['name']
             weather_desc = weather_data['weather'][0]['description']
             temp = weather_data['main']['temp']
+            temp_min = weather_data['main']['temp_min']
+            temp_max = weather_data['main']['temp_max']
             humidity = weather_data['main']['humidity']
-            weather_text = f"{weather_desc.capitalize()}\nTemp: {temp}°C\nHumidity: {humidity}%"
-            draw.text((10, 120), weather_text, font=font12, fill=0)
+            precipitation = weather_data.get('rain', {}).get('1h', 0)
+            weather_text = (f"{city}\n{weather_desc.capitalize()}\n"
+                            f"Temp: {temp}°C\nMin Temp: {temp_min}°C\n"
+                            f"Max Temp: {temp_max}°C\nHumidity: {humidity}%\n"
+                            f"Precipitation: {precipitation}mm")
+            draw.text((53, 8), weather_text, font=font12, fill=0)
         except Exception as e:
             logging.error(f"Error fetching weather data: {e}")
         
