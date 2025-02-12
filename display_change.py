@@ -117,7 +117,7 @@ try:
                           f"Mem: {mem_info}\n"
                           f"Temp: {temp}°C\n"
                           f"IP: {ip_address}\n"
-                          f"Uptime: {uptime}\n")
+                          f"Up: {uptime}\n")
             draw.text((53, 8), stats_text, font=font18, fill=0)
         except Exception as e:
             logging.error(f"Error fetching system stats: {e}")
