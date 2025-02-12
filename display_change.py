@@ -114,7 +114,7 @@ try:
             ip_address = subprocess.check_output("hostname -I | awk '{print $1}'", shell=True).decode('utf-8').strip()
 
             stats_text = (f"CPU: {cpu_usage}%\n"
-                  f"Mem: {mem_info}\n"
+                  f"{mem_info}\n"
                   f"Temp: {temp}°C\n"
                   f"Net: {net_info}\n"
                   f"IP: {ip_address}")
