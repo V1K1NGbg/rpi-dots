@@ -110,14 +110,14 @@ try:
             cpu_usage = subprocess.check_output("top -bn1 | grep 'Cpu(s)' | sed 's/.*, *\([0-9.]*\)%* id.*/\\1/' | awk '{print 100 - $1}'", shell=True).decode('utf-8').strip()
             mem_info = subprocess.check_output("free -m | awk 'NR==2{printf \"%.2f%%\", $3*100/$2 }'", shell=True).decode("utf-8").strip()
             temp = subprocess.check_output("vcgencmd measure_temp | egrep -o '[0-9]*\.[0-9]*'", shell=True).decode('utf-8').strip()
-            net_info = subprocess.check_output("ifstat -i wlan0 1 1 | awk 'NR==3 {print \"Up: \" $1 \" KB/s, Down: \" $2 \" KB/s\"}'", shell=True).decode('utf-8').strip()
             ip_address = subprocess.check_output("hostname -I | awk '{print $1}'", shell=True).decode('utf-8').strip()
+            uptime = subprocess.check_output("uptime -p", shell=True).decode('utf-8').strip()
 
             stats_text = (f"CPU: {cpu_usage}%\n"
-                  f"Mem: {mem_info}\n"
-                  f"Temp: {temp}°C\n"
-                  f"Net: {net_info}\n"
-                  f"IP: {ip_address}")
+                          f"Mem: {mem_info}\n"
+                          f"Temp: {temp}°C\n"
+                          f"IP: {ip_address}\n"
+                          f"Uptime: {uptime}\n")
             draw.text((53, 8), stats_text, font=font18, fill=0)
         except Exception as e:
             logging.error(f"Error fetching system stats: {e}")
