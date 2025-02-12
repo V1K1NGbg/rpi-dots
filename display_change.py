@@ -111,7 +111,7 @@ try:
             mem_info = subprocess.check_output("free -m | awk 'NR==2{printf \"%.2f%%\", $3*100/$2 }'", shell=True).decode("utf-8").strip()
             temp = subprocess.check_output("vcgencmd measure_temp | egrep -o '[0-9]*\.[0-9]*'", shell=True).decode('utf-8').strip()
             ip_address = subprocess.check_output("hostname -I | awk '{print $1}'", shell=True).decode('utf-8').strip()
-            uptime = ' '.join(subprocess.check_output("uptime -p", shell=True).decode('utf-8').strip().split(' ')[1:])
+            uptime = subprocess.check_output("uptime -p | cut -d ' ' -f 2-", shell=True).decode('utf-8').strip()
 
             stats_text = (f"CPU: {cpu_usage}%\n"
                           f"Mem: {mem_info}\n"
