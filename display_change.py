@@ -91,14 +91,14 @@ try:
             precipitation = weather_data.get('rain', {}).get('3h', 0)
 
             weather_text = (f"{city}\n{weather_desc.capitalize()}\n"
-                    f"Temp: {temp}°C"
-                    f"Humidity: {humidity}%\n"
-                    f"Rain for next 3h: {precipitation}mm")
+                            f"Temp: {temp}°C"
+                            f"Humidity: {humidity}%\n"
+                            f"Rain for next 3h: {precipitation}mm")
             desktop_info = (f"IP: {ip_address}\n"
-                    f"Up: {uptime}\n")
-                    f"Time: {current_time}\n"
-                    f"UTC: {utc_time}\n"
-                    f"{weather_text}")
+                            f"Up: {uptime}\n"
+                            f"Time: {current_time}\n"
+                            f"UTC: {utc_time}\n"
+                            f"{weather_text}")
             draw.text((53, 8), desktop_info, font=font18, fill=0)
         except Exception as e:
             logging.error(f"Error fetching desktop info: {e}")
