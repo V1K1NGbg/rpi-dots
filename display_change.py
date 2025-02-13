@@ -76,36 +76,30 @@ try:
         title = 'Dock'
         # draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
         try:
-            hostname = subprocess.check_output("hostname", shell=True).decode('utf-8').strip()
             ip_address = subprocess.check_output("hostname -I | awk '{print $1}'", shell=True).decode('utf-8').strip()
-            uptime = subprocess.check_output("uptime -p", shell=True).decode('utf-8').strip()
-            
+            uptime = subprocess.check_output("uptime -p | cut -d ' ' -f 2-", shell=True).decode('utf-8').strip()
+            current_time = time.strftime("%Y-%m-%d %H:%M", time.localtime())
+            utc_time = time.strftime("%Y-%m-%d %H:%M", time.gmtime())
+
             url = f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={APPID}&units=metric"
             response = requests.get(url)
             weather_data = response.json()
             city = weather_data['name']
             weather_desc = weather_data['weather'][0]['description']
             temp = weather_data['main']['temp']
-            temp_min = weather_data['main']['temp_min']
-            temp_max = weather_data['main']['temp_max']
             humidity = weather_data['main']['humidity']
             precipitation = weather_data.get('rain', {}).get('3h', 0)
 
             weather_text = (f"{city}\n{weather_desc.capitalize()}\n"
-                    f"Temp: {temp}°C\nMin Temp: {temp_min}°C\n"
-                    f"Max Temp: {temp_max}°C\nHumidity: {humidity}%\n"
+                    f"Temp: {temp}°C"
+                    f"Humidity: {humidity}%\n"
                     f"Rain for next 3h: {precipitation}mm")
-
-            current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-            utc_time = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
-
-            desktop_info = (f"Hostname: {hostname}\n"
-                    f"IP: {ip_address}\n"
-                    f"Uptime: {uptime}\n"
-                    f"Local Time: {current_time}\n"
-                    f"UTC Time: {utc_time}\n"
-                    f"Weather:\n{weather_text}")
-            draw.text((53, 8), desktop_info, font=font10, fill=0)
+            desktop_info = (f"IP: {ip_address}\n"
+                    f"Up: {uptime}\n")
+                    f"Time: {current_time}\n"
+                    f"UTC: {utc_time}\n"
+                    f"{weather_text}")
+            draw.text((53, 8), desktop_info, font=font18, fill=0)
         except Exception as e:
             logging.error(f"Error fetching desktop info: {e}")
         
