@@ -105,7 +105,7 @@ try:
                     f"Local Time: {current_time}\n"
                     f"UTC Time: {utc_time}\n"
                     f"Weather:\n{weather_text}")
-            draw.text((53, 8), desktop_info, font=font18, fill=0)
+            draw.text((53, 8), desktop_info, font=font10, fill=0)
         except Exception as e:
             logging.error(f"Error fetching desktop info: {e}")
         
