@@ -164,11 +164,9 @@ try:
                 for i in range(start_index, end_index):
                     container_id, container_name, container_status = containers[i].split(' ', 2)
                     if i == id:
-                        draw.rectangle((53, 8 + (i - start_index) * 43, 255, 8 + (i - start_index + 1) * 43), outline=0, fill=0)
-                        draw.text((53, 8 + (i - start_index) * 43), f"Id: {container_id}\nName: {container_name}\nStatus: {container_status}", font=font08, fill=255)
-                    else:
-                        draw.text((53, 8 + (i - start_index) * 43), f"Id: {container_id}\nName: {container_name}\nStatus: {container_status}", font=font08, fill=0)
+                        draw.ellipse((48, 8 + (i - start_index) * 43, 52, 12 + (i - start_index) * 43), fill=0)
 
+                    draw.text((53, 8 + (i - start_index) * 43), f"Id: {container_id}\nName: {container_name}\nStatus: {container_status}", font=font08, fill=0)
                 if start:
                     selected_container_id = containers[id].split(' ')[0]
                     container_status = subprocess.check_output(f"docker inspect -f '{{{{.State.Status}}}}' {selected_container_id}", shell=True).decode('utf-8').strip()
