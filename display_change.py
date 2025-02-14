@@ -244,7 +244,7 @@ try:
         if GPIO.input(6) == False or GPIO.input(13) == False:
             max_containers = int(subprocess.check_output("docker ps -q | wc -l", shell=True).decode('utf-8').strip())
             id = 0
-            draw(4, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, false)
+            draw(4, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, False)
             while True:
                 if GPIO.input(5) == False:
                     main(draw)
@@ -252,13 +252,13 @@ try:
                 if GPIO.input(6) == False:
                     if id != max_containers - 1:
                         id = id + 1
-                    draw(4, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, false)
+                    draw(4, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, False)
                 if GPIO.input(13) == False:
                     if id != 0:
                         id = id - 1
-                    draw(4, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, false)
+                    draw(4, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, False)
                 if GPIO.input(19) == False:
-                    draw(4, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, true)
+                    draw(4, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, True)
 
         # --------------------------------------------
     
