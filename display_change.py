@@ -161,9 +161,9 @@ try:
                     container_id, container_name, container_status = container.split(' ', 2)
                     if i == id:
                         draw.rectangle((0, 8 + i * 20, 264, 28 + i * 20), outline=0, fill=0)
-                        draw.text((5, 8 + i * 20), f"{container_id} {container_name} {container_status}", font=font6, fill=255)
+                        draw.text((5, 8 + i * 20), f"{container_id} {container_name} {container_status}", font=font06, fill=255)
                     else:
-                        draw.text((5, 8 + i * 20), f"{container_id} {container_name} {container_status}", font=font6, fill=0)
+                        draw.text((5, 8 + i * 20), f"{container_id} {container_name} {container_status}", font=font06, fill=0)
                 if start:
                     selected_container_id = containers[id].split(' ')[0]
                     container_status = subprocess.check_output(f"docker inspect -f '{{{{.State.Status}}}}' {selected_container_id}", shell=True).decode('utf-8').strip()
@@ -172,7 +172,7 @@ try:
                     else:
                         subprocess.check_output(f"docker start {selected_container_id}", shell=True)
             else:
-                draw.text((5, 8), "No containers found", font=font6, fill=0)
+                draw.text((5, 8), "No containers found", font=font06, fill=0)
         except Exception as e:
             logging.error(f"Error fetching docker containers: {e}")
 
