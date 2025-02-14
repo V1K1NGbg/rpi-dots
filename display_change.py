@@ -253,12 +253,12 @@ try:
                     main(draw)
                     break
                 if GPIO.input(6) == False:
-                    if id != max_containers - 1:
-                        id = id + 1
-                    draw(4, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, False)
-                if GPIO.input(13) == False:
                     if id != 0:
                         id = id - 1
+                    draw(4, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, False)
+                if GPIO.input(13) == False:
+                    if id != max_containers - 1:
+                        id = id + 1
                     draw(4, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, False)
                 if GPIO.input(19) == False:
                     draw(4, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, True)
