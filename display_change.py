@@ -265,8 +265,7 @@ try:
                     draw(5, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, False)
                 if GPIO.input(19) == False:
                     draw(5, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, True)
-                    draw.text(((264-draw.textlength("Stoping", font=font24) + 53)/2, 70), "Starting/Stoping", font=font24, fill=0)
-                    time.sleep(1)
+                    time.sleep(2)
                     draw(5, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, False)
 
         # --------------------------------------------
