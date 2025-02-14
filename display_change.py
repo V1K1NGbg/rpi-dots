@@ -164,7 +164,7 @@ try:
                 for i in range(start_index, end_index):
                     container_id, container_name, container_status = containers[i].split(' ', 2)
                     if i == id:
-                        draw.ellipse((48, 8 + (i - start_index) * 43 + 12, 58, 18 + (i - start_index) * 43 + 12), fill=0)
+                        draw.ellipse((48, 8 + (i - start_index) * 43 + 6, 58, 18 + (i - start_index) * 43 + 6), fill=0)
 
                     draw.text((53, 8 + (i - start_index) * 43), f"Id: {container_id[:3]}... | Name: {container_name}\nStatus: {container_status}", font=font10, fill=0)
                 if start:
