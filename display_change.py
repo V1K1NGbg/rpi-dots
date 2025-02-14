@@ -177,7 +177,7 @@ try:
                     else:
                         subprocess.check_output(f"docker start {selected_container_id}", shell=True)
             else:
-                draw.text((5, 8), "No containers found", font=font08, fill=0)
+                draw.text(((264-draw.textlength("No containers found", font=font24) + 53)/2, 70), title, font=font24, fill=0)
         except Exception as e:
             logging.error(f"Error fetching docker containers: {e}")
 
