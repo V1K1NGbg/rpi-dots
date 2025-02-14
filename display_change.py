@@ -160,14 +160,11 @@ try:
                 for i, container in enumerate(containers):
                     container_id, container_name, container_status = container.split(' ', 2)
                     if i == id:
-                        draw.rectangle((0, 8 + i * 60, 264, 68 + i * 60), outline=0, fill=0)
-                        draw.text((5, 8 + i * 60), f"ID: {container_id}", font=font10, fill=255)
-                        draw.text((5, 28 + i * 60), f"Name: {container_name}", font=font10, fill=255)
-                        draw.text((5, 48 + i * 60), f"Status: {container_status}", font=font10, fill=255)
+                        draw.rectangle((53, 8 + i * 20, 264, 28 + i * 20), outline=0, fill=0)
+                        draw.text((53, 8 + i * 43), f"Id: {container_id}\nName: {container_name}\nStatus: {container_status}", font=font10, fill=255)
                     else:
-                        draw.text((5, 8 + i * 60), f"ID: {container_id}", font=font10, fill=0)
-                        draw.text((5, 28 + i * 60), f"Name: {container_name}", font=font10, fill=0)
-                        draw.text((5, 48 + i * 60), f"Status: {container_status}", font=font10, fill=0)
+                        draw.text((53, 8 + i * 43), f"Id: {container_id}\nName: {container_name}\nStatus: {container_status}", font=font10, fill=0)
+
                 if start:
                     selected_container_id = containers[id].split(' ')[0]
                     container_status = subprocess.check_output(f"docker inspect -f '{{{{.State.Status}}}}' {selected_container_id}", shell=True).decode('utf-8').strip()
