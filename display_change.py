@@ -90,7 +90,7 @@ try:
             humidity = weather_data['main']['humidity']
             precipitation = weather_data.get('rain', {}).get('3h', 0)
 
-            weather_text = (f"{city}, {weather_desc.capitalize()}\n"
+            weather_text = (f"{city}: {weather_desc.capitalize()}\n"
                             f"Temp: {temp}°C\n"
                             f"Humidity: {humidity}%\n"
                             f"Rain for next 3h: {precipitation}mm")
@@ -148,9 +148,30 @@ try:
 
     # --------------------------------------------
 
-    def draw_docker_screen(draw):
+    def draw_docker_screen(draw, id, start):
         title = 'Docker'
-        draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
+        # draw.text(((264-draw.textlength(title, font=font24) + 53)/2, 70), title, font=font24, fill=0)
+        try:
+            containers = subprocess.check_output("docker ps -a --format '{{.ID}} {{.Names}} {{.Status}}'", shell=True).decode('utf-8').strip().split('\n')
+            if containers:
+            for i, container in enumerate(containers):
+                container_id, container_name, container_status = container.split(' ', 2)
+                if i == id:
+                draw.rectangle((0, 8 + i * 20, 264, 28 + i * 20), outline=0, fill=0)
+                draw.text((5, 8 + i * 20), f"{container_id} {container_name} {container_status}", font=font10, fill=255)
+                else:
+                draw.text((5, 8 + i * 20), f"{container_id} {container_name} {container_status}", font=font10, fill=0)
+            else:
+            draw.text((5, 8), "No containers found", font=font10, fill=0)
+            if start:
+            selected_container_id = containers[id].split(' ')[0]
+            container_status = subprocess.check_output(f"docker inspect -f '{{{{.State.Status}}}}' {selected_container_id}", shell=True).decode('utf-8').strip()
+            if container_status == "running":
+                subprocess.check_output(f"docker stop {selected_container_id}", shell=True)
+            else:
+                subprocess.check_output(f"docker start {selected_container_id}", shell=True)
+        except Exception as e:
+            logging.error(f"Error fetching docker containers: {e}")
 
     # --------------------------------------------
 
@@ -185,7 +206,6 @@ try:
 
 
     def main(draw):
-        # draw(4, ['Display', 'Vitals', 'Docker', 'Power'], font10, draw_start_screen)
         draw(3, ['Display', 'Docker', '', 'Power'], font10, draw_start_screen)
 
     # --------------------------------------------
@@ -222,12 +242,23 @@ try:
         # --------------------------------------------
 
         if GPIO.input(6) == False or GPIO.input(13) == False:
-            # draw(4, ['Back', 'CPU', 'Memory', 'Network'], font10, draw_vitals_screen)
-            draw(4, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen)
+            max_containers = int(subprocess.check_output("docker ps -q | wc -l", shell=True).decode('utf-8').strip())
+            id = 0
+            draw(4, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, false)
             while True:
                 if GPIO.input(5) == False:
                     main(draw)
                     break
+                if GPIO.input(6) == False:
+                    if id != max_containers - 1:
+                        id = id + 1
+                    draw(4, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, false)
+                if GPIO.input(13) == False:
+                    if id != 0:
+                        id = id - 1
+                    draw(4, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, false)
+                if GPIO.input(19) == False:
+                    draw(4, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, true)
 
         # --------------------------------------------
     
