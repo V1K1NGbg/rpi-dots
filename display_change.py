@@ -172,12 +172,8 @@ try:
                     container_status = subprocess.check_output(f"docker inspect -f '{{{{.State.Status}}}}' {selected_container_id}", shell=True).decode('utf-8').strip()
                     if container_status == "running":
                         subprocess.check_output(f"docker stop {selected_container_id}", shell=True)
-                        draw.text(((264-draw.textlength("Stoping", font=font24) + 53)/2, 70), "Stoping", font=font24, fill=0)
-                        time.sleep(1)
                     else:
                         subprocess.check_output(f"docker start {selected_container_id}", shell=True)
-                        draw.text(((264-draw.textlength("Starting", font=font24) + 53)/2, 70), "Starting", font=font24, fill=0)
-                        time.sleep(1)
             else:
                 draw.text(((264-draw.textlength("No containers found", font=font18) + 53)/2, 70), "No containers found", font=font18, fill=0)
         except Exception as e:
@@ -269,6 +265,9 @@ try:
                     draw(5, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, False)
                 if GPIO.input(19) == False:
                     draw(5, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, True)
+                    draw.text(((264-draw.textlength("Stoping", font=font24) + 53)/2, 70), "Starting/Stoping", font=font24, fill=0)
+                    time.sleep(1)
+                    draw(5, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, False)
 
         # --------------------------------------------
     
