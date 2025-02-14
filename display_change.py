@@ -13,7 +13,7 @@ import traceback
 import requests
 import const
 
-def draw(num, text, fontxx, draw_func):
+def draw(num, text, fontxx, draw_func, id=None, start=None):
     Himage = Image.new('1', (epd.height, epd.width), 255)
     Himage.paste(Image.open('imgs/layout' + str(num) + '.png'))
     draw = ImageDraw.Draw(Himage)
@@ -32,7 +32,10 @@ def draw(num, text, fontxx, draw_func):
                 location = (location[0], location[1] + 14)
         else:
             draw.text(text_locations[t], tt, font=fontxx, fill=0)
-    draw_func(draw)
+    if id != None:
+        draw_func(draw, id, start)
+    else:
+        draw_func(draw)
     epd.display(epd.getbuffer(Himage))
 
 try:
