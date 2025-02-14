@@ -160,7 +160,7 @@ try:
                 for i, container in enumerate(containers):
                     container_id, container_name, container_status = container.split(' ', 2)
                     if i == id:
-                        draw.rectangle((53, 8 + i * 20, 264, 28 + i * 20), outline=0, fill=0)
+                        draw.rectangle((53, 8 + i * 43, 255, 8 + (i + 1) * 43), outline=0, fill=0)
                         draw.text((53, 8 + i * 43), f"Id: {container_id}\nName: {container_name}\nStatus: {container_status}", font=font10, fill=255)
                     else:
                         draw.text((53, 8 + i * 43), f"Id: {container_id}\nName: {container_name}\nStatus: {container_status}", font=font10, fill=0)
