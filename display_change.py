@@ -256,10 +256,12 @@ try:
                     main(draw)
                     break
                 if GPIO.input(6) == False:
+                    print(id, max_containers)
                     if id != 0:
                         id = id - 1
                     draw(5, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, False)
                 if GPIO.input(13) == False:
+                    print(id, max_containers)
                     if id != max_containers - 1:
                         id = id + 1
                     draw(5, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, False)
