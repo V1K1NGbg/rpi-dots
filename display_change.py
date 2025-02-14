@@ -173,13 +173,10 @@ try:
                     if container_status == "running":
                         subprocess.check_output(f"docker stop {selected_container_id}", shell=True)
                         draw.text(((264-draw.textlength("Stoping", font=font24) + 53)/2, 70), "Stoping", font=font24, fill=0)
+                        time.sleep(1)
                     else:
                         subprocess.check_output(f"docker start {selected_container_id}", shell=True)
                         draw.text(((264-draw.textlength("Starting", font=font24) + 53)/2, 70), "Starting", font=font24, fill=0)
-                    while True:
-                        new_status = subprocess.check_output(f"docker inspect -f '{{{{.State.Status}}}}' {selected_container_id}", shell=True).decode('utf-8').strip()
-                        if new_status != container_status:
-                            break
                         time.sleep(1)
             else:
                 draw.text(((264-draw.textlength("No containers found", font=font18) + 53)/2, 70), "No containers found", font=font18, fill=0)
