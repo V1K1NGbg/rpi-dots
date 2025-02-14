@@ -28,7 +28,7 @@ cd rpi-dots
 
 # GET CONSTANTS
 
-python3 display_change.py
+# python3 display_change.py
 
 # fix key
 
