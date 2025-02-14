@@ -164,7 +164,7 @@ try:
                 for i in range(start_index, end_index):
                     container_id, container_name, container_status = containers[i].split(' ', 2)
                     if i == id:
-                        draw.rectangle((53, 8 + (i - start_index) * 43, 255, -5 + (i - start_index + 1) * 43), outline=0, fill=0)
+                        # draw.rectangle((53, 8 + (i - start_index) * 43, 255, -5 + (i - start_index + 1) * 43), outline=0, fill=0)
                         draw.text((53, 8 + (i - start_index) * 43), f"Id: {container_id}\nName: {container_name}\nStatus: {container_status}", font=font08, fill=255)
                     else:
                         draw.text((53, 8 + (i - start_index) * 43), f"Id: {container_id}\nName: {container_name}\nStatus: {container_status}", font=font08, fill=0)
@@ -252,7 +252,7 @@ try:
         if GPIO.input(6) == False or GPIO.input(13) == False:
             max_containers = int(subprocess.check_output("docker ps -q | wc -l", shell=True).decode('utf-8').strip())
             id = 0
-            draw(4, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, False)
+            draw(5, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, False)
             while True:
                 if GPIO.input(5) == False:
                     main(draw)
@@ -260,13 +260,13 @@ try:
                 if GPIO.input(6) == False:
                     if id != 0:
                         id = id - 1
-                    draw(4, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, False)
+                    draw(5, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, False)
                 if GPIO.input(13) == False:
                     if id != max_containers - 1:
                         id = id + 1
-                    draw(4, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, False)
+                    draw(5, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, False)
                 if GPIO.input(19) == False:
-                    draw(4, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, True)
+                    draw(5, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, True)
 
         # --------------------------------------------
     
