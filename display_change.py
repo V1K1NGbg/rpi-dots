@@ -248,7 +248,7 @@ try:
         # --------------------------------------------
 
         if GPIO.input(6) == False or GPIO.input(13) == False:
-            max_containers = int(subprocess.check_output("docker ps -q | wc -l", shell=True).decode('utf-8').strip())
+            max_containers = int(subprocess.check_output("docker ps -aq | wc -l", shell=True).decode('utf-8').strip())
             id = 0
             draw(5, ['Back', 'Up', 'Down', 'Start/Stop'], font10, draw_docker_screen, id, False)
             while True:
