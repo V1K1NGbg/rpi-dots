@@ -28,8 +28,7 @@ cd rpi-dots
 
 # GET CONSTANTS
 
+sudo crontab -e
+@reboot sh /home/pi/rpi-dots/launcher.sh
+
 # python3 display_change.py
-
-# fix key
-
-# auto run
