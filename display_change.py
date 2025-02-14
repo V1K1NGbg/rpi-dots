@@ -157,26 +157,26 @@ try:
         try:
             containers = subprocess.check_output("docker ps -a --format '{{.ID}} {{.Names}} {{.Status}}'", shell=True).decode('utf-8').strip().split('\n')
             if containers and containers[0]:
-            max_display = 4
-            start_index = max(0, id - max_display + 1)
-            end_index = min(len(containers), start_index + max_display)
-            for i in range(start_index, end_index):
-                container_id, container_name, container_status = containers[i].split(' ', 2)
-                if i == id:
-                draw.rectangle((53, 8 + (i - start_index) * 43, 255, 8 + (i - start_index + 1) * 43), outline=0, fill=0)
-                draw.text((53, 8 + (i - start_index) * 43), f"Id: {container_id}\nName: {container_name}\nStatus: {container_status}", font=font8, fill=255)
-                else:
-                draw.text((53, 8 + (i - start_index) * 43), f"Id: {container_id}\nName: {container_name}\nStatus: {container_status}", font=font8, fill=0)
+                max_display = 4
+                start_index = max(0, id - max_display + 1)
+                end_index = min(len(containers), start_index + max_display)
+                for i in range(start_index, end_index):
+                    container_id, container_name, container_status = containers[i].split(' ', 2)
+                    if i == id:
+                        draw.rectangle((53, 8 + (i - start_index) * 43, 255, 8 + (i - start_index + 1) * 43), outline=0, fill=0)
+                        draw.text((53, 8 + (i - start_index) * 43), f"Id: {container_id}\nName: {container_name}\nStatus: {container_status}", font=font8, fill=255)
+                    else:
+                        draw.text((53, 8 + (i - start_index) * 43), f"Id: {container_id}\nName: {container_name}\nStatus: {container_status}", font=font8, fill=0)
 
-            if start:
-                selected_container_id = containers[id].split(' ')[0]
-                container_status = subprocess.check_output(f"docker inspect -f '{{{{.State.Status}}}}' {selected_container_id}", shell=True).decode('utf-8').strip()
-                if container_status == "running":
-                subprocess.check_output(f"docker stop {selected_container_id}", shell=True)
-                else:
-                subprocess.check_output(f"docker start {selected_container_id}", shell=True)
+                if start:
+                    selected_container_id = containers[id].split(' ')[0]
+                    container_status = subprocess.check_output(f"docker inspect -f '{{{{.State.Status}}}}' {selected_container_id}", shell=True).decode('utf-8').strip()
+                    if container_status == "running":
+                        subprocess.check_output(f"docker stop {selected_container_id}", shell=True)
+                    else:
+                        subprocess.check_output(f"docker start {selected_container_id}", shell=True)
             else:
-            draw.text((5, 8), "No containers found", font=font8, fill=0)
+                draw.text((5, 8), "No containers found", font=font8, fill=0)
         except Exception as e:
             logging.error(f"Error fetching docker containers: {e}")
 
